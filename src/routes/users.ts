@@ -1,0 +1,93 @@
+import { Router } from "express";
+import { usersService } from "../services/users-service";
+import {  validateLogin, validateUser } from "../middleware/joi";
+import { isAdmin } from "../middleware/is-admin";
+import { isAdminOrSelf } from "../middleware/is-admin-or-self";
+import { isSelf } from "../middleware/is-self";
+import { Logger } from "../logs/logger";
+
+const router = Router();
+
+
+// top ordersusers
+router.get("/top-users", ...isAdmin, async (req, res, next) => {
+  try {
+    const user  = await usersService.getUserById(req.payload._id);
+    Logger.log(user.orders);
+    const topUsers = await usersService.getTopUsers();
+    console.log(topUsers);
+    res.json(topUsers);
+  } catch (e) {
+    next(e);
+  }
+});
+
+// update user
+router.put("/:id", ...isSelf, validateUser, async (req, res, next) => {
+  try {
+    const saved = await usersService.updateUser(req.body, req.payload._id);
+    res.json(saved);
+  } catch (e) {
+    next(e);
+  }
+});
+ 
+// get user by id
+router.get("/:id", ...isAdminOrSelf, async (req, res, next) => {
+  try {
+    const user = await usersService.getUserById(req.params.id);
+    res.json(user);
+  } catch (e) {
+    next(e);
+  }
+});
+
+
+// get all users
+router.get("/", ...isAdmin, async (req, res, next) => {
+  try {
+    const users = await usersService.getAllUsers();
+    res.json(users);
+  } catch (e) {
+    next(e);
+  }
+});
+
+// login
+router.post("/login", validateLogin, async (req, res, next) => {
+  try {
+    const jwt = await usersService.loginUser(req.body);
+    res.send(jwt);
+  } catch (e) {
+    next(e);
+  }
+});
+
+
+// create new user
+router.post("/", validateUser, async (req, res, next) => {
+  try {
+    const result = await usersService.createUser(req.body);
+    const { password, ...saved } = result.toJSON();
+    //return all data but saved!
+    res.status(201).json(saved);
+  } catch (e) {
+    next(e);
+  }
+});
+
+// delete user
+router.delete("/:id", ...isAdminOrSelf, async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const deletedUser = await usersService.deleteUser(userId);
+    res.json({ message: "User deleted successfully", user: deletedUser });
+  } catch (e) {
+    next(e);
+  }
+});
+
+
+
+
+export default router;
