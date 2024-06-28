@@ -12,8 +12,6 @@ const router = Router();
 // top ordersusers
 router.get("/top-users", ...isAdmin, async (req, res, next) => {
   try {
-    const user  = await usersService.getUserById(req.payload._id);
-    Logger.log(user.orders);
     const topUsers = await usersService.getTopUsers();
     console.log(topUsers);
     res.json(topUsers);

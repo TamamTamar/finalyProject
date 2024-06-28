@@ -52,8 +52,29 @@ export const usersService = {
     return user;
   },
 
-  getTopUsers: async () => User.find({}, { password: 0 }).sort({ Orders: -1 }).limit(3), 
+/*   getTopUsers: async () => User.find({}, { password: 0 }).sort({ Orders: -1 }).limit(3),  */
+
+getTopUsers: async () => {
+  // שלב 1: איסוף היוזרים לפי מספר ההזמנות
+  const users = await User.aggregate([
+      {
+          $project: {
+              name: 1,
+              orders: 1,
+              totalOrders: { $size: "$orders" },
+              totalAmount: { $sum: "$orders.totalAmount" }
+          }
+      },
+      {
+          $sort: { totalOrders: -1 } // סידור לפי מספר ההזמנות בסדר יורד
+      },
+      { $limit: 3 } // דוגמאה: הצגת 3 היוזרים בעמוד
+  ]);
+  
+
+  return users;
+
+  
+}
 
 };
-
-

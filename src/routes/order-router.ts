@@ -19,12 +19,13 @@ router.post("/",...isBusiness, validateToken, async (req, res, next) => {
         const order = await orderService.createOrder(userId, products);
         res.status(201).json(order);
         const user = await usersService.getUserById(userId);
-        user.orders.push(order.userId);
+        user.orders.push(order._id);
         await user.save();
 
         /* (await usersService.getUserById(userId)).orders.push(); */
     } catch (e) {
         next(e);
+        
     }
 });
 
