@@ -68,6 +68,4 @@ export const orderService = {
         return statuses;
     },
 
-
-
 };

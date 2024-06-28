@@ -1,4 +1,5 @@
 import Product from "../db/models/product-model";
+import User from "../db/models/user-model";
 
 export const analyticsService = {
     getInventory: async () => {
@@ -23,4 +24,26 @@ export const analyticsService = {
             sold: product.sold,
         };
     },
+    getTopUsers: async () => {
+        // שלב 1: איסוף היוזרים לפי מספר ההזמנות
+        const users = await User.aggregate([
+            {
+                $project: {
+                    name: 1,
+                    orders: 1,
+                    totalOrders: { $size: "$orders" },
+                    totalAmount: { $sum: "$orders.totalAmount" }
+                }
+            },
+            {
+                $sort: { totalOrders: -1 } // סידור לפי מספר ההזמנות בסדר יורד
+            },
+            { $limit: 3 } // דוגמאה: הצגת 3 היוזרים בעמוד
+        ]);
+        
+      
+        return users;
+      
+        
+      }
 };

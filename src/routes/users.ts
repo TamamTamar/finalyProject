@@ -9,16 +9,6 @@ import { Logger } from "../logs/logger";
 const router = Router();
 
 
-// top ordersusers
-router.get("/top-users", ...isAdmin, async (req, res, next) => {
-  try {
-    const topUsers = await usersService.getTopUsers();
-    console.log(topUsers);
-    res.json(topUsers);
-  } catch (e) {
-    next(e);
-  }
-});
 
 // update user
 router.put("/:id", ...isSelf, validateUser, async (req, res, next) => {
