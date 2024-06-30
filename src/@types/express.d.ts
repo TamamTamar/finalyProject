@@ -1,9 +1,9 @@
 import { IJWTPayload } from "./@types";
 
-declare global{
-    namespace Express{
+declare global {
+    namespace Express {
         interface Request {
-            payload?: IJWTPayload
+            payload?: IJWTPayload,
         }
     }
 }

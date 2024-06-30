@@ -1,15 +1,26 @@
 import { Router } from "express";
 import { usersService } from "../services/users-service";
-import { validateCard, validateLogin, validateUser } from "../middleware/joi";
+import { validateBusiness, validateLogin, validateUser } from "../middleware/joi";
 import { isAdmin } from "../middleware/is-admin";
 import { isAdminOrSelf } from "../middleware/is-admin-or-self";
 import { isSelf } from "../middleware/is-self";
 
+
 const router = Router();
+
 
 router.put("/:id", ...isSelf, validateUser, async (req, res, next) => {
   try {
     const saved = await usersService.updateUser(req.body, req.payload._id);
+    res.json(saved);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.patch("/:id", ...isSelf, validateBusiness, async (req, res, next) => {
+  try {
+    const saved = await usersService.patchUser(req.body, req.payload._id);
     res.json(saved);
   } catch (e) {
     next(e);
@@ -25,14 +36,24 @@ router.get("/:id", ...isAdminOrSelf, async (req, res, next) => {
   }
 });
 
-router.get("/", ...isAdmin, async (req, res, next) => {
+router.delete("/:id", ...isAdminOrSelf, async (req, res, next) => {
   try {
-    const users = await usersService.getAllUsers();
-    res.json(users);
+    const user = await usersService.deleteUserById(req.params.id);
+    res.json(user);
   } catch (e) {
     next(e);
   }
 });
+
+  router.get("/", ...isAdmin, async (req, res, next) => {
+    try {
+      const users = await usersService.getAllUsers();
+      res.json(users);
+    } catch (e) {
+      next(e);
+    }
+  });
+
 
 router.post("/login", validateLogin, async (req, res, next) => {
   try {
@@ -53,5 +74,7 @@ router.post("/", validateUser, async (req, res, next) => {
     next(e);
   }
 });
+
+
 
 export default router;

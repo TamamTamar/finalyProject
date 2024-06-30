@@ -4,5 +4,3 @@ import userSchema from "../schemas/user-schema";
 const User = mongoose.model("User", userSchema);
 
 export default User;
-
-//schema->model->use the model (OOP usage)

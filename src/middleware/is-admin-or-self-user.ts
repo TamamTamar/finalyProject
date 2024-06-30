@@ -3,15 +3,15 @@ import BizProductsError from "../errors/BizProductsError";
 import { validateToken } from "./validate-token";
 
 
-const _isAdminOrSelf: RequestHandler = (req, _, next) => {
-    const requestedId = req.params.id;
+const _isAdminOrSelfUser: RequestHandler = (req, _, next) => {
+    const requestedUserId = req.params.userId;
     const userId = req.payload._id;
 
-    if (requestedId === userId || req.payload?.isAdmin) {
+    if (requestedUserId === userId || req.payload?.isAdmin) {
         return next();
     }
 
     next(new BizProductsError(403, "Must be the requested user or admin"));
 };
 
-export const isAdminOrSelf = [validateToken, _isAdminOrSelf];
+export const isAdminOrSelfUser = [validateToken, _isAdminOrSelfUser];
