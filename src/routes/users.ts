@@ -1,16 +1,12 @@
 import { Router } from "express";
 import { usersService } from "../services/users-service";
-import {  validateLogin, validateUser } from "../middleware/joi";
+import { validateCard, validateLogin, validateUser } from "../middleware/joi";
 import { isAdmin } from "../middleware/is-admin";
 import { isAdminOrSelf } from "../middleware/is-admin-or-self";
 import { isSelf } from "../middleware/is-self";
-import { Logger } from "../logs/logger";
 
 const router = Router();
 
-
-
-// update user
 router.put("/:id", ...isSelf, validateUser, async (req, res, next) => {
   try {
     const saved = await usersService.updateUser(req.body, req.payload._id);
@@ -19,8 +15,7 @@ router.put("/:id", ...isSelf, validateUser, async (req, res, next) => {
     next(e);
   }
 });
- 
-// get user by id
+
 router.get("/:id", ...isAdminOrSelf, async (req, res, next) => {
   try {
     const user = await usersService.getUserById(req.params.id);
@@ -30,8 +25,6 @@ router.get("/:id", ...isAdminOrSelf, async (req, res, next) => {
   }
 });
 
-
-// get all users
 router.get("/", ...isAdmin, async (req, res, next) => {
   try {
     const users = await usersService.getAllUsers();
@@ -41,7 +34,6 @@ router.get("/", ...isAdmin, async (req, res, next) => {
   }
 });
 
-// login
 router.post("/login", validateLogin, async (req, res, next) => {
   try {
     const jwt = await usersService.loginUser(req.body);
@@ -51,8 +43,6 @@ router.post("/login", validateLogin, async (req, res, next) => {
   }
 });
 
-
-// create new user
 router.post("/", validateUser, async (req, res, next) => {
   try {
     const result = await usersService.createUser(req.body);
@@ -63,19 +53,5 @@ router.post("/", validateUser, async (req, res, next) => {
     next(e);
   }
 });
-
-// delete user
-router.delete("/:id", ...isAdminOrSelf, async (req, res, next) => {
-  try {
-    const userId = req.params.id;
-    const deletedUser = await usersService.deleteUser(userId);
-    res.json({ message: "User deleted successfully", user: deletedUser });
-  } catch (e) {
-    next(e);
-  }
-});
-
-
-
 
 export default router;

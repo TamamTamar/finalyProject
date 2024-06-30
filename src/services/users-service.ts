@@ -1,6 +1,4 @@
 import { IJWTPayload, ILogin, IUserInput } from "../@types/@types";
-import { users } from "../db/initial-data";
-import Order from "../db/models/order-model";
 import User from "../db/models/user-model";
 import BizCardsError from "../errors/BizCardsError";
 import { authService } from "./auth-service";
@@ -45,15 +43,4 @@ export const usersService = {
   getAllUsers: async () => User.find({}, { password: 0 }),
 
   getUserById: async (id: string) => User.findById(id, { password: 0 }),
-
-  deleteUser: async (id: string) => {
-    const user = await User.findByIdAndDelete(id);
-    if (!user) throw new Error("User not found");
-    return user;
-  },
-
-/*   getTopUsers: async () => User.find({}, { password: 0 }).sort({ Orders: -1 }).limit(3),  */
-
-
-
 };

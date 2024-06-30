@@ -1,4 +1,6 @@
-
+export type Cat = {
+  name: string;
+};
 
 export type IName = {
   first: string;
@@ -33,50 +35,39 @@ export type IUserInput = {
 export type IUser = IUserInput & {
   createdAt: Date;
   isAdmin: boolean;
-  orders: object[];
- 
 };
 
 export type ILogin = {
   email: string;
-  password: string;
+  password: string
 };
+
 
 export type IJWTPayload = {
-  _id: string;
-  isAdmin: boolean;
-  isBusiness: boolean;
-};
+  _id: string, 
+  isAdmin: boolean,
+  isBusiness: boolean
+}
 
-export type IProductInput = {
+
+export type ICardInput = {
   title: string;
   subtitle: string;
   description: string;
-  price: number;
+  phone: string;
+  email: string;
+  web: string;
   image: IImage;
+  address: IAddress
 };
 
-export type IProduct = IProductInput & {
-  _id: string;
-  barcode: number;
-  createdAt: Date;
-  shoppingCart: string[];
-  quantity: number;
-  sold: number;
-  userId: string;
+export type ICard = ICardInput & {
+  _id: string, 
+  bizNumber: number,
+  createdAt: Date,
+  likes: string[],
+  userId: string
 };
-
-export type IOrderProduct = {
-  productId: string;
-  quantity: number;
-};
-
-export type IOrder = {
-  userId: string;
-  products: IOrderProduct[];
-  totalAmount: number;
-  status: string;
-  createdAt: Date;
-
-
-};
+export type IIsBusiness = {
+  isBusiness: boolean
+}

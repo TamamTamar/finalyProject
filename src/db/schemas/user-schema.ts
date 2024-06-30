@@ -3,7 +3,6 @@ import { IUser } from "../../@types/@types";
 import nameSchema from "./name-schema";
 import addressSchema from "./address-schema";
 import imageSchema from "./image-schema";
-import { object } from "joi";
 
 const userSchema = new Schema<IUser>({
   name: nameSchema,
@@ -23,9 +22,6 @@ const userSchema = new Schema<IUser>({
 
   createdAt: { type: Date, default: new Date(), required: false },
   isAdmin: { required: false, type: Boolean, default: false },
-  orders: [ {
-    type: Object, },
-],
 });
 
 export default userSchema;

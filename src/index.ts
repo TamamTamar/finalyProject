@@ -6,13 +6,11 @@ import connect from "./db/connection";
 import configDevEnv from "../config";
 import errorHandler from "./middleware/error-handler";
 import morgan from "morgan";
-import { productRouter } from "./routes/products";
+import { cardRouter } from "./routes/cards";
 import { Logger } from "./logs/logger";
 configDevEnv();
 connect();
 import cors from 'cors';
-import { analyticsRouter } from "./routes/analytics-router";
-import { orderRouter } from "./routes/order-router";
 Logger.error("hi");
 
 const app = express();
@@ -23,9 +21,7 @@ app.use(morgan("dev"));
 app.use(cors({ origin: ["http://localhost:5173", "http://localhost:5172"] }));
 //http://localhost:8080/api/v1/users
 app.use("/api/v1/users", usersRouter);
-app.use("/api/v1/products", productRouter);
-app.use("/api/v1/analytics", analyticsRouter);
-app.use("/api/v1/orders", orderRouter);
+app.use("/api/v1/cards", cardRouter);
 app.use(express.static("public"));
 app.use(errorHandler);
 app.use(notFound);

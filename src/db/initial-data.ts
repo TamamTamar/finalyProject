@@ -1,14 +1,13 @@
 const users = [
   {
     isAdmin: true,
-    orders : [],
     name: {
       first: "Tamar",
       middle: "",
       last: "Tamam",
     },
     phone: "0507123012",
-    email: "TamarTamam@gmail.com",
+    email: "tamarTamam@gmail.com",
     password: "Abc!123Abc",
     address: {
       state: "IL",
@@ -19,10 +18,8 @@ const users = [
       zip: "8920435",
     },
     isBusiness: true,
-    
   },
   {
-    orders : [],
     name: {
       first: "Moshe",
       middle: "",
@@ -42,89 +39,65 @@ const users = [
     isBusiness: true,
   },
   {
-    orders : [],
     name: {
-      first: "Yossi",
+      first: "haim",
       middle: "",
-      last: "Cohen",
+      last: "lev",
     },
-    phone: "050-9123012",
-    email: "rtytuj@gmail.com",
+    phone: "050-2437412",
+    email: "haim@gmail.com",
     password: "Abc!123Abc",
     address: {
       state: "IL",
       country: "Israel",
-      city: "Haifa",
-      street: "HaNevim",
+      city: "lod",
+      street: "hanasi",
       houseNumber: 5,
       zip: "8920435",
     },
-    isBusiness: true,
-
+    isBusiness: false,
   },
+];
+const cards = [
   {
-    orders : [],
-    name: {
-      first: "Yossi",
-      middle: "",
-      last: "Cohen",
+    title: "a wonderful new card",
+    subtitle: "a test value for this card",
+    description: "a test value for new card\na test value for new card\n",
+    phone: "050-3211234",
+    email: "qwe@gmail.com",
+    web: "https://www.bing.com",
+    image: {
+      url: "https://img.izismile.com/img/img13/20201030/640/you_have_never_seen_something_like_this_640_36.jpg",
+      alt: "image of something",
     },
-    phone: "050-9123012",
-    email: "xxx@gmail.com",
-    password: "Abc!123Abc",
     address: {
       state: "IL",
       country: "Israel",
-      city: "Haifa",
-      street: "HaNevim",
+      city: "Tel aviv",
+      street: "Shoham",
       houseNumber: 5,
       zip: "8920435",
     },
-    isBusiness: true,
-
   },
- 
+  {
+    title: "a wonderful new card",
+    subtitle: "another test value for this card",
+    description: "a test value for new card\na test value for new card\n",
+    phone: "050-3211234",
+    email: "qwe@gmail.com",
+    web: "https://www.bing.com",
+    image: {
+      url: "https://img.izismile.com/img/img13/20201030/640/you_have_never_seen_something_like_this_640_36.jpg",
+      alt: "image of something",
+    },
+    address: {
+      state: "IL",
+      country: "Israel",
+      city: "Tel aviv",
+      street: "Shoham",
+      houseNumber: 5,
+      zip: "8920435",
+    },
+  }
 ];
-const products = [
-  {
-    title: "product 1",
-    subtitle: "a test value for this card",
-    description: "a test value for new card\na test value for new card\n",
-    price: 111,
-    quantity: 3,
-    sold: 0,
-    image: {
-      url: "https://img.izismile.com/img/img13/20201030/640/you_have_never_seen_something_like_this_640_36.jpg",
-      alt: "image of something",
-    },
-  },
-
-  {
-    title: "product 2",
-    subtitle: "a test value for this card",
-    description: "a test value for new card\na test value for new card\n",
-    price: 222,
-    quantity: 4,
-    sold: 0,
-    image: {
-      url: "https://img.izismile.com/img/img13/20201030/640/you_have_never_seen_something_like_this_640_36.jpg",
-      alt: "image of something",
-    },
-  },
-
-  {
-    title: "product 3",
-    subtitle: "a test value for this card",
-    description: "a test value for new card\na test value for new card\n",
-    price: 333,
-    quantity: 5,
-    sold: 2,
-    image: {
-      url: "https://img.izismile.com/img/img13/20201030/640/you_have_never_seen_something_like_this_640_36.jpg",
-      alt: "image of something",
-    },
-  },
-
-
-];
-export { users , products};
+export { users , cards};
