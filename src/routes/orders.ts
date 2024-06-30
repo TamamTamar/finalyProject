@@ -4,10 +4,13 @@ import { validateToken } from "../middleware/validate-token";
 import { isAgeValid } from "../middleware/is-age";
 import { isAdmin } from "../middleware/is-admin";
 import { usersService } from "../services/users-service";
+import { isUser } from "../middleware/is-user";
+import { isAdminOrSelfUser } from "../middleware/is-admin-or-self-user";
+import { isAdminOrSelf } from "../middleware/is-admin-or-self";
 
 const router = Router();
 
-
+//create new order
 router.post("/", ...isAgeValid, async (req, res, next) => {
     try {
         const userId = req.payload._id;
@@ -15,17 +18,17 @@ router.post("/", ...isAgeValid, async (req, res, next) => {
 
         const order = await orderService.createOrder(userId, products);
         res.status(201).json(order);
-        const user = await usersService.getUserById(userId);
+     /*    const user = await usersService.getUserById(userId);
         user.orders.push(order._id);
-        await user.save();
+        await user.save(); */
 
     } catch (e) {
         next(e);
     }
 });
 
-
-router.get("/:id", validateToken, async (req, res, next) => {
+//get order by id
+router.get("/:id", ...isAdmin, async (req, res, next) => {
     try {
         const orderId = req.params.id;
         const order = await orderService.getOrder(orderId);
@@ -35,18 +38,19 @@ router.get("/:id", validateToken, async (req, res, next) => {
     }
 });
 
-
-router.get("/user/:userId", validateToken, async (req, res, next) => {
+//get orders by user
+router.get("/user/:userId", ...isAdminOrSelfUser, async (req, res, next) => {
     try {
         const userId = req.body.userId;
         const orders = await orderService.getOrdersByUser(userId);
+        console.log(orders);
         res.json(orders);
     } catch (e) {
         next(e);
     }
 });
 
-
+//get all orders
 router.get("/", ...isAdmin, async (req, res, next) => {
     try {
         const { orders, count } = await orderService.getAllOrders();
@@ -57,7 +61,7 @@ router.get("/", ...isAdmin, async (req, res, next) => {
     }
 });
 
-
+//cancel order
 router.patch("/cancel/:orderId", ...isAdmin, async (req, res, next) => {
     try {
         const orderId = req.params.orderId;

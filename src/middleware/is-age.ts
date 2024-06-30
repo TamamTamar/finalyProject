@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 import BizProductsError from "../errors/BizProductsError";
 import Product from "../db/models/product-model";
 import { validateToken } from "./validate-token";
+import { isUser } from "./is-user";
 
 
 const _isAgeValid: RequestHandler  = async (req, _, next) => {
@@ -25,4 +26,4 @@ const _isAgeValid: RequestHandler  = async (req, _, next) => {
     }
 };
 
-export const isAgeValid = [validateToken, _isAgeValid];
+export const isAgeValid = [ validateToken, _isAgeValid,];
