@@ -10,7 +10,8 @@ export const orderService = {
             const orderProducts = await Promise.all(products.map(async product => {
                 const productDetails = await Product.findById(product.productId);
                 if (!productDetails) throw new Error("Product not found");
-                if (productDetails.quantity < product.quantity) throw new Error("Not enough stock");
+                if (productDetails.quantity < product.quantity)
+                    throw "Not enough stock";
 
                 // Update product stock
                 productDetails.quantity -= product.quantity;
@@ -38,6 +39,7 @@ export const orderService = {
             return await order.save();
         } catch (error) {
             console.error("Error creating order:", error.message);
+
             throw error;
         }
     },
@@ -67,5 +69,7 @@ export const orderService = {
         console.log("Grouped statuses:", statuses);
         return statuses;
     },
+
+
 
 };
