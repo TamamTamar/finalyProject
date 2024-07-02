@@ -1,17 +1,17 @@
 import Order from "../db/models/order-model";
 import Product from "../db/models/product-model";
 import { IOrderProduct } from "../@types/@types";
-import BizCardsError from "../errors/BizCardsError";
+import bizProductsError from "../errors/bizProductsError";
 
 export const orderService = {
     createOrder: async (userId: string, products: IOrderProduct[]) => {
         try {
             const orderProducts = await Promise.all(products.map(async product => {
                 const productDetails = await Product.findById(product.productId);
-                if (!productDetails) 
-                    throw new BizCardsError(404,"Product not found");
+                if (!productDetails)
+                    throw new bizProductsError(404, "Product not found");
                 if (productDetails.quantity < product.quantity)
-                     throw new BizCardsError(400,"Not enough stock");
+                    throw new bizProductsError(400, "Not enough stock");
 
                 // Update product stock
                 productDetails.quantity -= product.quantity;
@@ -45,12 +45,12 @@ export const orderService = {
 
     cancelOrder: async (orderId: string) => {
         const order = await Order.findById(orderId);
-    /*     if (!order)
-             throw new BizCardsError(404,"Order not found");
-
-        if (order.status === "cancelled") {
-            throw new BizCardsError(400,"Order is already cancelled");
-        }  */
+        /*     if (!order)
+                 throw new bizProductsError(404,"Order not found");
+    
+            if (order.status === "cancelled") {
+                throw new bizProductsError(400,"Order is already cancelled");
+            }  */
 
         // Return the stock
         for (const product of order.products) {
@@ -76,5 +76,5 @@ export const orderService = {
     getOrdersByUser: async (userId: string) => {
         return Order.find({ userId }).populate("products.productId");
     },
-    
+
 };

@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import BizCardsError from "../errors/BizCardsError";
+import bizProductsError from "../errors/bizProductsError";
 import Order from "../db/models/order-model";
 
 const isOrder: RequestHandler = async (req, _, next) => {
@@ -8,13 +8,13 @@ const isOrder: RequestHandler = async (req, _, next) => {
         const order = await Order.findById(orderId);
 
         if (!order) {
-            return next(new BizCardsError(403, "Order not found"));
+            return next(new bizProductsError(403, "Order not found"));
         }
 
         if (order.status !== "cancelled") {
             return next();
         } else {
-            return next(new BizCardsError(400, "Order is cancelled"));
+            return next(new bizProductsError(400, "Order is cancelled"));
         }
     } catch (e) {
         return next(e);

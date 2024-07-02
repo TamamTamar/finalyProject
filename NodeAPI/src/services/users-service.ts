@@ -1,10 +1,10 @@
 import { IJWTPayload, ILogin, IUserInput } from "../@types/@types";
 import User from "../db/models/user-model";
-import BizCardsError from "../errors/BizCardsError";
+import bizProductsError from "../errors/bizProductsError";
 import { authService } from "./auth-service";
 
 export const usersService = {
- //update user
+  //update user
   updateUser: async (id: string, data: IUserInput) => {
     data.password = await authService.hashPassword(data.password);
     const user = await User.findByIdAndUpdate(id, data, { new: true });
@@ -26,14 +26,14 @@ export const usersService = {
     const user = await User.findOne({ email });
 
     if (!user) {
-      throw new BizCardsError(401, "Invalid email or password");
+      throw new bizProductsError(401, "Invalid email or password");
     }
 
     //check the pass:
     const isValid = await authService.comparePassword(password, user.password);
 
     if (!isValid) {
-      throw new BizCardsError(401, "Invalid email or password");
+      throw new bizProductsError(401, "Invalid email or password");
     }
     // payload {isAdmin ,isBusiness, _id}
     const payload: IJWTPayload = {
@@ -51,7 +51,7 @@ export const usersService = {
   deleteUser: async (id: string) => {
     const user = await User.findByIdAndDelete(id);
     if (!user)
-      throw new BizCardsError(404, "User not found");
+      throw new bizProductsError(404, "User not found");
     return user;
   },
 };

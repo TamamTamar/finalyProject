@@ -21,7 +21,7 @@ console.log(process.env.JWT_SECRET);
 app.use(json());
 app.use(morgan("dev"));
 app.use(cors({ origin: ["http://localhost:5173", "http://localhost:5172"] }));
-//http://localhost:8080/api/v1/users
+//http://localhost:8080/api/v1
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/analytics", analyticsRouter);

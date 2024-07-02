@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { validateToken } from "./validate-token";
-import BizCardsError from "../errors/BizCardsError";
+import bizProductsError from "../errors/bizProductsError";
 import { productService } from "../services/product-service";
 
 
@@ -14,7 +14,7 @@ const _isProductOwnerOrAdmin: RequestHandler = async (req, _, next) => {
 
     }
 
-    else next(new BizCardsError(403, "Only the card owner or admin is allowed"))
+    else next(new bizProductsError(403, "Only the card owner or admin is allowed"))
     console.log(card.userId, userId);
 };
 

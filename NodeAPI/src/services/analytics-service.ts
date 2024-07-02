@@ -1,12 +1,12 @@
 import Product from "../db/models/product-model";
 import Order from "../db/models/order-model";
 import { IOrderProduct } from "../@types/@types";
-import BizCardsError from "../errors/BizCardsError";
+import bizProductsError from "../errors/bizProductsError";
 import User from "../db/models/user-model";
 
 export const analyticsService = {
 
-//get inventory
+    //get inventory
     getInventory: async () => {
         const products = await Product.find();
         return products.map(product => ({
@@ -15,41 +15,41 @@ export const analyticsService = {
             sold: product.sold,
         }));
     },
-//get all orders
-        getAllOrders: async () => {
-            const orders = await Order.find().populate({
-                path: 'userId',
-                select: 'name', // אכלוס השדה name מתוך userId
+    //get all orders
+    getAllOrders: async () => {
+        const orders = await Order.find().populate({
+            path: 'userId',
+            select: 'name', // אכלוס השדה name מתוך userId
 
-            }).populate('products.productId');
+        }).populate('products.productId');
 
-            console.log(orders); // Add this line to log the orders data
+        console.log(orders); // Add this line to log the orders data
 
-            return orders.map(order => ({
-                orderId: order._id,
-                userId: order.userId._id,
-                products: order.products.map(product => ({
-                    productId: product.productId._id,
-                    title: product.title,
-                    barcode: product.barcode,
-                    quantity: product.quantity,
-                    price: product.price,
-                })),
-                totalAmount: order.totalAmount,
-                status: order.status,
-                createdAt: order.createdAt,
-            }));
-        },
+        return orders.map(order => ({
+            orderId: order._id,
+            userId: order.userId._id,
+            products: order.products.map(product => ({
+                productId: product.productId._id,
+                title: product.title,
+                barcode: product.barcode,
+                quantity: product.quantity,
+                price: product.price,
+            })),
+            totalAmount: order.totalAmount,
+            status: order.status,
+            createdAt: order.createdAt,
+        }));
+    },
 
-        //get sales by date
+    //get sales by date
     getSalesByDate: async (startDate: Date, endDate: Date) => {
 
         if (!startDate || !endDate) {
-            throw new BizCardsError(400, "Start date and end date are required");
+            throw new bizProductsError(400, "Start date and end date are required");
         }
 
         if (new Date(endDate) < new Date(startDate)) {
-            throw new BizCardsError(400, "End date cannot be earlier than start date");
+            throw new bizProductsError(400, "End date cannot be earlier than start date");
         }
 
         //
@@ -139,7 +139,7 @@ export const analyticsService = {
 
         const order = await Order.findByIdAndUpdate(orderId, { status }, { new: true });
         if (!order) {
-            throw new BizCardsError(404, "Order not found");
+            throw new bizProductsError(404, "Order not found");
         }
 
         return order;

@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import BizCardsError from "../errors/BizCardsError";
+import bizProductsError from "../errors/bizProductsError";
 import { validateToken } from "./validate-token";
 
 const _isBusiness: RequestHandler = (req, res, next) => {
@@ -9,7 +9,7 @@ const _isBusiness: RequestHandler = (req, res, next) => {
     return next();
   }
 
-  next(new BizCardsError(403, "Must be a business"));
+  next(new bizProductsError(403, "Must be a business"));
 };
 
 //export an array of middleware

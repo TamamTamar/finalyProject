@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import BizCardsError from "../errors/BizCardsError";
+import bizProductsError from "../errors/bizProductsError";
 import { validateToken } from "./validate-token";
 
 const _isSelf: RequestHandler = (req, res, next) => {
@@ -7,7 +7,7 @@ const _isSelf: RequestHandler = (req, res, next) => {
     return next();
   }
 
-  next(new BizCardsError(403, "Only the user is allowed"));
+  next(new bizProductsError(403, "Only the user is allowed"));
 };
 
 export const isSelf = [validateToken, _isSelf];

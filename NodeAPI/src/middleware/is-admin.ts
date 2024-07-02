@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import BizCardsError from "../errors/BizCardsError";
+import bizProductsError from "../errors/bizProductsError";
 import { validateToken } from "./validate-token";
 
 const _isAdmin: RequestHandler = (req, _, next) => {
@@ -7,7 +7,7 @@ const _isAdmin: RequestHandler = (req, _, next) => {
     return next();
   }
 
-  next(new BizCardsError(403, "Must be admin"));
+  next(new bizProductsError(403, "Must be admin"));
 };
 
 export const isAdmin = [validateToken, _isAdmin];

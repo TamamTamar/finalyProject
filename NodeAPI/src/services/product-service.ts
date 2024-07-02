@@ -3,7 +3,7 @@ import { IProductInput } from "../@types/@types";
 import Product from "../db/models/product-model";
 import { Logger } from "../logs/logger";
 import User from "../db/models/user-model";
-import BizCardsError from "../errors/BizCardsError";
+import bizProductsError from "../errors/bizProductsError";
 
 //generate random barcode
 const generateBarcodeNumber = async () => {
@@ -31,25 +31,25 @@ export const productService = {
   getProducts: async () => Product.find(),
 
   //get product by id
-/*   getProduct: async (id: string) => Product.findById(id),
- */
+  /*   getProduct: async (id: string) => Product.findById(id),
+   */
   //get product by user id
   getProductByUserId: async (userId: string) => Product.find({ userId: userId }),
 
-//get product by id
+  //get product by id
   getProductById: async (id: string) => Product.findById(id),
 
-//toggle shopping cart
+  //toggle shopping cart
   toggleShoppingCart: async (userId: string, productId: string) => {
-    const user = await User.findById(userId);  
+    const user = await User.findById(userId);
     const product = await Product.findById(productId);
-  
+
     // Ensure that productId is a string before comparison
     const productIdStr = productId.toString();
-  
+
     // Find the product in the cart, checking if productId exists and is a string
     const productInCart = user.cart.find(item => item.productId?.toString() === productIdStr);
-  
+
     if (productInCart) {
       // Remove the product from the cart
       user.cart = user.cart.filter(item => item.productId?.toString() !== productIdStr);
@@ -61,17 +61,17 @@ export const productService = {
         price: product.price,
       });
     }
-  
+
     await user.save();
     return user.cart;
   },
-  
 
-  
-  
+
+
+
 
   updateProduct: async (id: string, data: IProductInput) => {
-    const product = await Product.findOneAndUpdate({ _id: id}, data, { new: true });
+    const product = await Product.findOneAndUpdate({ _id: id }, data, { new: true });
     return product;
   },
 
@@ -86,10 +86,10 @@ export const productService = {
     if (user) {
       return user.cart;
     } else {
-      throw new BizCardsError(400, "User not found");
+      throw new bizProductsError(400, "User not found");
     }
   }
-  
+
 };
 
 

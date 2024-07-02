@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 
 import { productService } from "../services/product-service";
-import BizCardsError from "../errors/BizCardsError";
+import bizProductsError from "../errors/bizProductsError";
 
 
 
@@ -10,6 +10,6 @@ const isProductId: RequestHandler = async (req, res, next) => {
     if (product) {
         return next();
     }
-    next(new BizCardsError(400, "Product is not found"));
+    next(new bizProductsError(400, "Product is not found"));
 }
 export default isProductId;

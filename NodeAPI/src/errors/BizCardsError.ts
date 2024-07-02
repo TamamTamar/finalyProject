@@ -1,4 +1,4 @@
-class BizCardsError {
+class bizProductsError {
   status: number;
   message: string;
   date: Date;
@@ -10,4 +10,4 @@ class BizCardsError {
   }
 }
 
-export default BizCardsError;
+export default bizProductsError;

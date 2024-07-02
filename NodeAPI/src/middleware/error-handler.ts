@@ -2,11 +2,11 @@ import { ValidationError } from "joi";
 import { ErrorRequestHandler } from "express";
 
 import { MongoServerError } from "mongodb";
-import BizCardsError from "../errors/BizCardsError";
+import bizProductsError from "../errors/bizProductsError";
 
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   //my error
-  if (err instanceof BizCardsError) {
+  if (err instanceof bizProductsError) {
     return res.status(err.status).json(err);
   }
 

@@ -4,7 +4,7 @@ import { validateProduct, validateLogin, validateUser } from "../middleware/joi"
 import { isAdmin } from "../middleware/is-admin";
 import { isAdminOrSelf } from "../middleware/is-admin-or-self";
 import { isSelf } from "../middleware/is-self";
-import BizCardsError from "../errors/BizCardsError";
+import bizProductsError from "../errors/bizProductsError";
 
 const router = Router();
 
