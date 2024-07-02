@@ -1,7 +1,8 @@
 import Order from "../db/models/order-model";
 import Product from "../db/models/product-model";
 import { IOrderProduct } from "../@types/@types";
-import bizProductsError from "../errors/bizProductsError";
+import bizProductsError from "../errors/BizProductsError";
+
 
 export const orderService = {
     createOrder: async (userId: string, products: IOrderProduct[]) => {

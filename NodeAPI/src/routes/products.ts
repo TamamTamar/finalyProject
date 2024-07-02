@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { validateProduct } from "../middleware/joi";
-import {  productService } from "../services/product-service";
-import { isBusiness } from "../middleware/is-business";
-import { validateToken } from "../middleware/validate-token";
 import { isAdmin } from "../middleware/is-admin";
+import { isBusiness } from "../middleware/is-business";
 import isProductId from "../middleware/is-product-Id";
+import { validateProduct } from "../middleware/joi";
+import { validateToken } from "../middleware/validate-token";
+import { productService } from "../services/product-service";
 
 
 

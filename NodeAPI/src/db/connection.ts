@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import initDB from "./init-db";
 import { Logger } from "../logs/logger";
+import initDB from "./init-db";
 
 const connect = async () => {
   //load the value from .env

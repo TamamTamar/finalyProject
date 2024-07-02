@@ -3,7 +3,8 @@ import { IProductInput } from "../@types/@types";
 import Product from "../db/models/product-model";
 import { Logger } from "../logs/logger";
 import User from "../db/models/user-model";
-import bizProductsError from "../errors/bizProductsError";
+import bizProductsError from "../errors/BizProductsError";
+
 
 //generate random barcode
 const generateBarcodeNumber = async () => {

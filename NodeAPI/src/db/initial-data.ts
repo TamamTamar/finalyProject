@@ -105,4 +105,4 @@ const products = [
 
 
 ];
-export { users , products};
+export { products, users };

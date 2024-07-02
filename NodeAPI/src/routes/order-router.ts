@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { orderService } from "../services/order-service";
-import { validateToken } from "../middleware/validate-token";
+import isOrder from "../middleware/Is-order";
 import { isAdmin } from "../middleware/is-admin";
 import { isAdminOrSelfUser } from "../middleware/is-admin-or-self-user";
-import isOrder from "../middleware/Is-order";
+import { validateToken } from "../middleware/validate-token";
+import { orderService } from "../services/order-service";
 
 
 
@@ -54,7 +54,7 @@ router.patch("/cancel/:orderId", ...isAdmin, isOrder, async (req, res, next) => 
     try {
         const orderId = req.params.orderId;
         const cancelledOrder = await orderService.cancelOrder(orderId);
-        res.json(cancelledOrder);
+        res.json({messege: "Order cancelled successfully", order: cancelledOrder});
     } catch (e) {
         next(e);
     }

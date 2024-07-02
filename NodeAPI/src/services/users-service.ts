@@ -1,6 +1,7 @@
 import { IJWTPayload, ILogin, IUserInput } from "../@types/@types";
 import User from "../db/models/user-model";
-import bizProductsError from "../errors/bizProductsError";
+import bizProductsError from "../errors/BizProductsError";
+
 import { authService } from "./auth-service";
 
 export const usersService = {
@@ -46,8 +47,10 @@ export const usersService = {
   //get all users
   getAllUsers: async () => User.find({}, { password: 0 }),
 
+  //get user by id
   getUserById: async (id: string) => User.findById(id, { password: 0 }),
 
+  //delete user
   deleteUser: async (id: string) => {
     const user = await User.findByIdAndDelete(id);
     if (!user)
